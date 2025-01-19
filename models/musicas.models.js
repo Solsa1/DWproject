@@ -1,4 +1,4 @@
-const { DataType, DataTypes } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 const sequelize = require('.../config/database');
 
 const Musica = sequelize.define('Musica', {
@@ -13,12 +13,19 @@ const Musica = sequelize.define('Musica', {
         notNull: true,
     },
     duracao:{
-        type: DataTypes.STRING,
+        type: DataTypes.FLOAT,
         notNull: true,
     },
     lyric:{
         type: DataTypes.STRING,
         notNull: false,
+    },
+    id_album: {
+        type: DataTypes.INTEGER,
+        references:{
+            Model:'Album',
+            key:'id'
+        }
     }},{
         tableName: 'musicas'
 })
