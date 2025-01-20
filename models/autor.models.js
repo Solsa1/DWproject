@@ -1,5 +1,5 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('.../config/database');
+const { DataTypes, Sequelize } = require('sequelize');
+const sequelize = new Sequelize('sqlite::memory:');
 
 const Autor = sequelize.define('Autor', {
     id:{
@@ -25,11 +25,11 @@ const Autor = sequelize.define('Autor', {
         type: DataTypes.STRING
     },
     senha:{
-        type: DataType.STRING,
+        type: DataTypes.STRING,
         notNull: true
     },
     gravadora:{
-        type: DataType.STRING
+        type: DataTypes.STRING
     }}, {
         tableName: 'Autor'
     }
