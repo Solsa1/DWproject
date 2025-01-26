@@ -3,10 +3,10 @@ const app = express();
 const port = 3000; 
 const sequelize = require('./database');
 
-const usuario = require("c:/Users/paulo/Documents/DWproject/models/usuario");
-const musicas = require('./models/musicas.models');
-const autor = require('./models/autor.models');
-const albuns = require('./models/albuns.models');
+const usuario = require("./usuario");
+const autor = require('./autor');
+const musicas = require('./musicas');
+const albuns = require('./albuns');
 
 
 async function testeconect(){
@@ -19,11 +19,10 @@ async function testeconect(){
     }
 }
 
-testeconect();
 
 async function sincronizacao(){
     try{
-        await sequelize.sync({ force: false });
+        await sequelize.sync();
         console.log('deu certo pae');
     }
     catch(error){
@@ -31,6 +30,7 @@ async function sincronizacao(){
     }
 }
 
+sincronizacao();
 
 async function UsuarioInsert(email, senha, nome) {
     let user = await usuario.create({
@@ -41,7 +41,6 @@ async function UsuarioInsert(email, senha, nome) {
     console.log(`usuario criado: ${user.id} - ${user.email} - ${user.senha} - ${user.nome} `)    
 }
 
-sincronizacao();
 UsuarioInsert('jose@gmail.com', '123', 'jose')
 
 app.listen(port, () => {
