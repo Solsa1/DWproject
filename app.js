@@ -41,7 +41,65 @@ async function UsuarioInsert(email, senha, nome) {
     console.log(`usuario criado: ${user.id} - ${user.email} - ${user.senha} - ${user.nome} `)    
 }
 
-UsuarioInsert('jose@gmail.com', '123', 'jose')
+async function UsuarioUpdate(id, email, senha, nome) {
+    let user = await usuario.update({ email: email, senha: senha, nome: nome }, {where:{id:id }})
+}
+
+async function UsuarioDelete(id) {
+    let user = await usuario.destroy({where:{id: id}});
+}
+
+async function UsuarioSelect(id) {
+    let user = await usuario.findByPk(id);
+    if (user == null){
+        console.log('id errado pae');
+    } else {
+        console.log(user.dataValues);
+    }
+}
+
+async function AutorInsert(nome, email, nome_art, genero, senha, gravadora) {
+    let dono = await autor.create({
+        nome:nome,
+        email:email,
+        nome_artistico: nome_art,
+        genero_musical: genero, 
+        senha: senha, 
+        gravadora: gravadora
+    })
+}
+
+
+async function AutorUpdate(id,nome, email, nome_art, genero, senha, gravadora ) {
+    let dono = await autor.update({
+        nome: nome,
+        email:email,
+        nome_artistico:nome_art,
+        genero_musical: genero,
+        senha:senha,
+        gravadora:gravadora
+    }, {where:{
+        id:id
+    }})    
+}
+
+
+async function AutorDelete(id) {
+    let dono = await autor.destroy({where:{id:id}})
+}
+
+
+
+async function AutorSelect(id) {
+    let dono = await autor.findByPk(id)
+    if (dono == null){
+        console.log('id errado pae')
+    } else {
+        console.log(dono.dataValues)
+    }
+}
+
+
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);
