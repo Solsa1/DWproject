@@ -1,0 +1,78 @@
+<!-- ESTE É O CADASTRO -->
+<p>cadastro de autor</p>
+<form action="/adicionarAutor" method="post">
+  <span>Nome: </span>
+    <input type="text" name="NomeAutor">
+
+  <span>Email: </span>
+    <input type="email" name="EmailAutor">
+
+  <span>NomeArtistico: </span>
+    <input type="text" name="NomeArtisticoAutor">
+
+  <span>Genero Musical: </span>
+    <input type="text" name="GeneroAutor">
+
+  <span>Senha: </span>
+    <input type="password" name="SenhaAutor">
+
+  <span>Gravadora: </span>
+    <input type="text" name="GravadoraAutor">
+
+  <button type="submit">confirmar</button>
+</form>
+
+<br>
+<!-- ESTE É O ATUALIZAR -->
+<p>atualizar dados do autor</p>
+<form action="/atualizarAutor" method="post">
+
+  <span>Seu Antigo Email: </span>
+    <input type="text" name="AntigoEmail">
+
+  <span>Sua Antiga Senha: </span>
+    <input type="password" name="AntigaSenha">
+
+  <span>Nome: </span>
+    <input type="text" name="NovoNomeAutor">
+
+  <span>Email: </span>
+    <input type="email" name="NovoEmailAutor">
+
+  <span>NomeArtistico: </span>
+    <input type="text" name="NovoNomeArtisticoAutor">
+
+  <span>Genero Musical: </span>
+    <input type="text" name="NovoGeneroAutor">
+
+  <span>Senha: </span>
+    <input type="password" name="NovoSenhaAutor">
+
+  <span>Gravadora: </span>
+    <input type="text" name="NovoGravadoraAutor">
+
+  <button type="submit">confirmed</button>
+</form>
+<br>
+<!-- Deletar autor -->
+<form action="/deletarAutor" method="post">
+  <span>O email que quer deletar: </span>
+    <input type="text" name="emailDeletado">
+  <span>A senha do email: </span>
+    <input type="text" name="senhaDeletada" id="">
+  <button type="submit">certeza?</button>
+</form>
+
+<!-- Lista com todos os autores-->
+<ul name="lista_autores">
+  <p>TODOS OS AUTORES CADASTRADOS</p>
+  {{#each autores}}
+    <li>Nome: {{this.nome}}</li>
+    <li>Email: {{this.email}}</li>
+    <li>Senha: {{this.senha}}</li>
+    <li>Nome Artistico: {{this.nome_artistico}}</li>
+    <li>Genero Musical: {{this.genero_musical}}</li>
+    <li>Gravadora: {{this.gravadora}}</li>
+    <br>
+  {{/each}}
+</ul>
