@@ -20,6 +20,9 @@ const bodyparser = require('body-parser')
 app.use(bodyparser.urlencoded({extended: false}))
 app.use(bodyparser.json())
 
+//Configuração do CSS
+app.use(express.static(__dirname + '/public'));
+
 //Funções básicas
 async function sincronizacao(){
     try{
@@ -30,8 +33,6 @@ async function sincronizacao(){
         console.error('deu ruim pa carai', error);
     }
 }
-
-
 
 async function UsuarioInsert(email, senha, nome) {
     let user = await usuario.create({
@@ -120,6 +121,10 @@ async function AutorFindPkbyLog(email, senha) {
 
 
 // Todas as rotas
+app.get('/', (req, res) =>{
+    res.render('index');
+})
+
 app.get('/crudautor', async (req, res) => {
     let autores = await autor.findAll()
     autores = autores.map((autor => autor.dataValues))
