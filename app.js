@@ -5,7 +5,7 @@ const port = 3000;
 
 //Configuração do banco de dados
 const sequelize = require('./database');
-const usuario = require("./usuario");
+const usuario = require('./usuario');
 const autor = require('./autor');
 const musicas = require('./musicas');
 const albuns = require('./albuns');
@@ -56,6 +56,15 @@ async function UsuarioSelect(id) {
         console.log('id errado pae');
     } else {
         console.log(user.dataValues);
+    }
+}
+
+async function UsuarioFindPkbyLog(email, senha) {
+    let identify = await usuario.findOne({atributes: ['id']}, {where: {email: email, senha:senha}})
+    if (identify == null){
+        console.log('deu errado lek')
+    } else {
+        return identify.id;
     }
 }
 
@@ -152,6 +161,44 @@ app.post('/deletarAutor', async (req, res) =>{
     let identify = await AutorFindPkbyLog(email, senha);
 
     AutorDelete(identify);
+    res.send('banido');
+})
+
+app.get('/crudusuario', async (req, res) => {
+    let usuarios = await usuario.findAll()
+    usuarios = usuarios.map((usuario => usuario.dataValues))
+    res.render('crudusuario', {usuarios});
+})
+
+app.post('/adicionarUsuario', (req, res) => {
+    let nome = req.body.NomeUsuario;
+    let email = req.body.EmailUsuario;
+    let senha = req.body.SenhaUsuario;
+    
+    UsuarioInsert(nome, email, senha);
+    res.send('deu tudo certo');
+    //res.render('/')
+})
+
+app.post('/atualizarUsuario', async (req, res) => {
+    let antigoEmail = req.body.AntigoEmail;
+    let antigaSenha = req.body.AntigaSenha;
+    let identify = await UsuarioFindPkbyLog(antigoEmail, antigaSenha);
+
+    let nome = req.body.NomeUsuario;
+    let email = req.body.EmailUsuario;
+    let senha = req.body.SenhaUsuario;
+   
+    UsuarioUpdate(identify, nome, email, senha);
+    res.send('tudo legal');})
+
+
+app.post('/deletarAutor', async (req, res) =>{
+    let email = req.body.emailDeletado;
+    let senha = req.body.senhaDeletada;
+    let identify = await UsuarioFindPkbyLog(email, senha);
+
+    UsuarioDelete(identify);
     res.send('banido');
 })
 

@@ -1,0 +1,112 @@
+/* Definindo o fundo e a fonte principal */
+body {
+    background-color: #2b2b2b;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-image: url('https://example.com/music-themed-background.jpg'); /* Substitua pela URL da imagem desejada */
+    background-size: cover;
+    background-position: center;
+  }
+  
+  /* Estilos para o título das seções */
+  p {
+    font-size: 28px;
+    color: #ffcc00;
+    margin-top: 50px;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
+  }
+  
+  /* Estilos para os formulários */
+  form {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 30px;
+    border-radius: 10px;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 700px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
+  }
+  
+  form span {
+    font-size: 18px;
+    margin-bottom: 12px;
+    display: block;
+    color: #ffcc00;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Estilo para os campos de input */
+  input[type="text"], input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #ffcc00;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  
+  button {
+    background-color: #ffcc00;
+    color: #333;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  button:hover {
+    background-color: #e6b800;
+    transform: scale(1.1);
+  }
+  
+  /* Estilos para a lista de usuários */
+  ul[name="lista_usuarios"] {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 30px;
+  }
+  
+  ul[name="lista_usuarios"] li {
+    background-color: rgba(0, 0, 0, 0.7);
+    margin: 12px 0;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    text-align: left;
+  }
+  
+  ul[name="lista_usuarios"] li span {
+    font-weight: bold;
+    color: #ffcc00;
+  }
+  
+  /* Efeitos para tornar a página mais interativa */
+  input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+    border-color: #ff9900;
+    background-color: #444;
+    outline: none;
+  }
+  
+  /* Responsividade para dispositivos móveis */
+  @media screen and (max-width: 768px) {
+    body {
+      padding: 10px;
+    }
+    
+    form {
+      width: 90%;
+      padding: 15px;
+    }
+    
+    button {
+      width: 100%;
+    }
+  }
+  

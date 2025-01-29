@@ -1,0 +1,55 @@
+<!-- ESTE É O CADASTRO -->
+<p>cadastro de autor</p>
+<form action="/adicionarUsuario" method="post">
+  <span>Nome: </span>
+    <input type="text" name="NomeUsuario">
+
+  <span>Email: </span>
+    <input type="email" name="EmailUsuario">
+
+  <span>Senha: </span>
+    <input type="password" name="SenhaUsuario">
+
+  <button type="submit">confirmar</button>
+</form>
+
+<br>
+<!-- ESTE É O ATUALIZAR -->
+<p>atualizar dados do usuario</p>
+<form action="/atualizarUsuario" method="post">
+    <span>Seu Antigo Email: </span>
+    <input type="text" name="AntigoEmail">
+
+  <span>Sua Antiga Senha: </span>
+    <input type="password" name="AntigaSenha">
+
+    <span>Nome: </span>
+    <input type="text" name="NomeUsuario">
+
+  <span>Email: </span>
+    <input type="email" name="EmailUsuario">
+
+  <span>Senha: </span>
+    <input type="password" name="SenhaUsuario">
+  <button type="submit">confirmed</button>
+</form>
+<br>
+<!-- Deletar autor -->
+<form action="/deletarUsuario" method="post">
+  <span>O email que quer deletar: </span>
+    <input type="text" name="emailDeletadoU">
+  <span>A senha do email: </span>
+    <input type="text" name="senhaDeletadaU" id="">
+  <button type="submit">certeza?</button>
+</form>
+
+<!-- Lista com todos os USUARIOS-->
+<ul name="lista_usuarios">
+  <p>TODOS OS USUARIOS CADASTRADOS</p>
+  {{#each usuarios}}
+    <li>Nome: {{this.nome}}</li>
+    <li>Email: {{this.email}}</li>
+    <li>Senha: {{this.senha}}</li>
+    <br>
+  {{/each}}
+</ul>
