@@ -1,0 +1,40 @@
+<!-- ESTE É O CADASTRO -->
+<h1>Cadastro de Autor</h1>
+<form action="/adicionarAutor" method="post">
+  <span>Nome: </span>
+    <input type="text" name="NomeAutor">
+
+  <span>Email: </span>
+    <input type="email" name="EmailAutor">
+
+  <span>NomeArtistico: </span>
+    <input type="text" name="NomeArtisticoAutor">
+
+  <span>Genero Musical: </span>
+    <input type="text" name="GeneroAutor">
+
+  <span>Senha: </span>
+    <input type="password" name="SenhaAutor">
+
+  <span>Gravadora: </span>
+    <input type="text" name="GravadoraAutor">
+
+  <button type="submit">confirmar</button>
+</form>
+<br>
+<!-- Lista com todos os autores-->
+<ul name="lista_usuarios">
+  <p>TODOS OS AUTORES CADASTRADOS</p>
+  {{#each autores}}
+    <li>Nome: {{this.nome}} <a href="/updateAutor/{{this.id}}">Deseja mudar esse autor?</a></li>
+    <li>Email: {{this.email}}<a href="/deleteAutor/{{this.id}}" onclick="return confirm('Tem certeza?')">Deseja excluir esse autor?</a></li>
+    <li>Senha: {{this.senha}}</li>
+    <li>Nome Artistico: {{this.nome_artistico}}</li>
+    <li>Genero Musical: {{this.genero_musical}}</li>
+    <li>Gravadora: {{this.gravadora}}</li>
+    <li><a href="/album/{{this.nome}}">Deseja criar um album?</a></li>
+    <li><a href="/musica/{{this.id}}">Deseja criar uma musica?</a></li>
+    <br>
+  {{/each}}
+</ul>
+<a href="/">Voltar</a>

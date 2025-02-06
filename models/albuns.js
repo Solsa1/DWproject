@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('./database');
+const sequelize = require('../database');
 
 const Album = sequelize.define('Album', {
     id:{
@@ -15,14 +15,12 @@ const Album = sequelize.define('Album', {
     },
     id_autor:{
       type: DataTypes.INTEGER,
+      allowNull: false,
       references:{
         model: 'Autors',
         key: 'id'
       }
-    },
-    duracao:{
-      type: DataTypes.FLOAT,
-      allowNull: false
-    }});
+    }
+    });
 
     module.exports = Album

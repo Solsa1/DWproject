@@ -1,0 +1,13 @@
+<h1>Atualizar os Dados do Usuario</h1>
+<form action="/updateUsuario/{{user.id}}" method="POST">
+    <span>Nome: </span>
+    <input type="text" name="NovoNomeUsuario" value="{{user.nome}}">
+
+  <span>Email: </span>
+    <input type="email" name="NovoEmailUsuario" value="{{user.email}}">
+
+  <span>Senha: </span>
+    <input type="password" name="NovoSenhaUsuario" value="{{user.senha}}">
+  <button type="submit">confirmed</button>
+</form>
+<a href="/">Voltar</a>

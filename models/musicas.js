@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('./database');
+const sequelize = require('../database');
 
 const Musica = sequelize.define('Musica', {
     id:{
@@ -24,6 +24,13 @@ const Musica = sequelize.define('Musica', {
         type: DataTypes.INTEGER,
         references:{
             model:'Albums',
+            key:'id'
+        }},
+    id_autor: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references:{
+            model:'Autors',
             key:'id'
         }
     }});

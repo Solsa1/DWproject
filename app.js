@@ -5,10 +5,10 @@ const port = 3000;
 
 //Configuração do banco de dados
 const sequelize = require('./database');
-const usuario = require('./usuario');
-const autor = require('./autor');
-const musicas = require('./musicas');
-const albuns = require('./albuns');
+const usuario = require('./models/usuario');
+const autor = require('./models/autor');
+const musicas = require('./models/musicas');
+const albuns = require('./models/albuns');
 
 //Configuração do handlebars
 const handlebars = require('express-handlebars')
@@ -33,42 +33,28 @@ async function sincronizacao(){
         console.error('deu ruim pa carai', error);
     }
 }
-
+//Função de usuarios
 async function UsuarioInsert(email, senha, nome) {
     let user = await usuario.create({
         email: email,
         senha: senha,
         nome: nome
-    })
-    console.log(`usuario criado: ${user.id} - ${user.email} - ${user.senha} - ${user.nome} `)    
+    }) 
 }
 
 async function UsuarioUpdate(id, email, senha, nome) {
-    let user = await usuario.update({ email: email, senha: senha, nome: nome }, {where:{id:id }})
+    let user = await usuario.update({ 
+        email: email, 
+        senha: senha, 
+        nome: nome }, 
+        {where:{id:id }})
 }
 
 async function UsuarioDelete(id) {
     let user = await usuario.destroy({where:{id: id}});
 }
 
-async function UsuarioSelect(id) {
-    let user = await usuario.findByPk(id);
-    if (user == null){
-        console.log('id errado pae');
-    } else {
-        console.log(user.dataValues);
-    }
-}
-
-async function UsuarioFindPkbyLog(email, senha) {
-    let identify = await usuario.findOne({atributes: ['id']}, {where: {email: email, senha:senha}})
-    if (identify == null){
-        console.log('deu errado lek')
-    } else {
-        return identify.id;
-    }
-}
-
+//Função de autores
 async function AutorInsert(nome, email, nome_art, genero, senha, gravadora) {
     let dono = await autor.create({
         nome:nome,
@@ -100,35 +86,23 @@ async function AutorDelete(id) {
     let dono = await autor.destroy({where:{id:id}})
 }
 
-
-async function AutorSelect(id) {
-    let pessoa = await autor.findByPk(id)
-    if (dono == null){
-        console.log('id errado pae')
-    } else {
-        return pessoa
-    }
+async function AutorFindPKbyname(name) {
+    let dono = await autor.findOne({
+        where: {nome:name},
+        attributes:['id'] 
+    })
+    return dono;
 }
-
-async function AutorFindPkbyLog(email, senha) {
-    let identify = await autor.findOne({atributes: ['id']}, {where: {email: email, senha:senha}})
-    if (identify == null){
-        console.log('deu errado lek')
-    } else {
-        return identify.id;
-    }
-}
-
 
 // Todas as rotas
 app.get('/', (req, res) =>{
     res.render('index');
 })
 
-app.get('/crudautor', async (req, res) => {
+app.get('/autor', async (req, res) => {
     let autores = await autor.findAll()
     autores = autores.map((autor => autor.dataValues))
-    res.render('crudautor', {autores});
+    res.render('autor', {autores});
 })
 
 app.post('/adicionarAutor', (req, res) => {
@@ -140,15 +114,11 @@ app.post('/adicionarAutor', (req, res) => {
     let grav = req.body.GravadoraAutor;
 
     AutorInsert(nome, email, nome_art, gen, senha, grav);
-    res.send('deu tudo certo');
-    //res.render('/')
+    res.redirect('/')
 })
 
-app.post('/atualizarAutor', async (req, res) => {
-    let antigoEmail = req.body.AntigoEmail;
-    let antigaSenha = req.body.AntigaSenha;
-    let identify = await AutorFindPkbyLog(antigoEmail, antigaSenha);
-
+app.post('/updateAutor/:id', (req, res) =>{
+    let identify = req.params.id;
     let nome = req.body.NovoNomeAutor;
     let email = req.body.NovoEmailAutor;
     let nome_art = req.body.NovoNomeArtisticoAutor;
@@ -157,22 +127,25 @@ app.post('/atualizarAutor', async (req, res) => {
     let grav = req.body.NovoGravadoraAutor;
     
     AutorUpdate(identify, nome, email, nome_art, gen, senha, grav);
-    res.send('tudo legal');})
-
-
-app.post('/deletarAutor', async (req, res) =>{
-    let email = req.body.emailDeletado;
-    let senha = req.body.senhaDeletada;
-    let identify = await AutorFindPkbyLog(email, senha);
-
-    AutorDelete(identify);
-    res.send('banido');
+    res.redirect('/')
 })
 
-app.get('/crudusuario', async (req, res) => {
+app.get('/updateAutor/:id', async (req, res) =>{
+    let autorr = await autor.findByPk(req.params.id);
+    autorr = autorr.dataValues;
+    res.render('updateAutor', {autorr})
+})
+
+
+app.get('/deleteAutor/:id', async (req, res) =>{
+    AutorDelete(req.params.id);
+    res.redirect('/');
+})
+
+app.get('/usuario', async (req, res) => {
     let usuarios = await usuario.findAll()
     usuarios = usuarios.map((usuario => usuario.dataValues))
-    res.render('crudusuario', {usuarios});
+    res.render('usuario', {usuarios});
 })
 
 app.post('/adicionarUsuario', (req, res) => {
@@ -180,33 +153,46 @@ app.post('/adicionarUsuario', (req, res) => {
     let email = req.body.EmailUsuario;
     let senha = req.body.SenhaUsuario;
     
-    UsuarioInsert(nome, email, senha);
-    res.send('deu tudo certo');
-    //res.render('/')
-})
+    UsuarioInsert(email, senha, nome);
+    res.redirect('/');
+});
 
-app.post('/atualizarUsuario', async (req, res) => {
-    let antigoEmail = req.body.AntigoEmail;
-    let antigaSenha = req.body.AntigaSenha;
-    let identify = await UsuarioFindPkbyLog(antigoEmail, antigaSenha);
+app.post('/updateUsuario/:id', (req, res) =>{
+    let identify = req.params.id;
 
-    let nome = req.body.NomeUsuario;
-    let email = req.body.EmailUsuario;
-    let senha = req.body.SenhaUsuario;
+    let nome = req.body.NovoNomeUsuario;
+    let email = req.body.NovoEmailUsuario;
+    let senha = req.body.NovoSenhaUsuario;
    
-    UsuarioUpdate(identify, nome, email, senha);
-    res.send('tudo legal');})
-
-
-app.post('/deletarAutor', async (req, res) =>{
-    let email = req.body.emailDeletado;
-    let senha = req.body.senhaDeletada;
-    let identify = await UsuarioFindPkbyLog(email, senha);
-
-    UsuarioDelete(identify);
-    res.send('banido');
+    UsuarioUpdate(identify, email, senha, nome);
+    res.redirect('/')
 })
 
+app.get('/updateUsuario/:id', async (req, res) =>{
+    let user = await usuario.findByPk(req.params.id);
+    user = user.dataValues;
+    res.render('updateUsuario', {user})
+})
+
+app.get('/deleteUsuario/:id', async (req, res) =>{
+    UsuarioDelete(req.params.id);
+    res.redirect('/');
+})
+
+app.get('/album/:nome', async (req, res) =>{
+    autor_dono = req.params.nome
+    res.render('album', {autor_dono});
+})
+
+app.post('/album/:nome', async (req, res) => {
+   let nomeAlbum = req.body.NomeAlbum;
+   let idAutor =  await AutorFindPKbyname(req.params.nome)
+   let album = await albuns.create({
+    nome:nomeAlbum,
+    id_autor:idAutor
+   })
+   res.redirect('/')
+})
 
 // Iniciando o server
 sincronizacao();

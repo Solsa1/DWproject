@@ -1,0 +1,23 @@
+<form action="/updateAutor/{{autorr.id}}" method="POST">
+  <span>Nome: </span>
+    <input type="text" name="NovoNomeAutor" value='{{autorr.nome}}'>
+
+  <span>Email: </span>
+    <input type="email" name="NovoEmailAutor" value="{{autorr.email}}">
+
+  <span>Senha: </span>
+    <input type="password" name="NovoSenhaAutor" value="{{autorr.senha}}">
+
+  <span>NomeArtistico: </span>
+    <input type="text" name="NovoNomeArtisticoAutor" value="{{autorr.nome_artistico}}">
+
+  <span>Genero Musical: </span>
+    <input type="text" name="NovoGeneroAutor" value="{{autorr.genero_musical}}">
+
+  <span>Gravadora: </span>
+    <input type="text" name="NovoGravadoraAutor" value="{{autorr.gravadora}}">
+
+  <button type="submit">confirmed</button>
+</form>
+
+<a href="/">Voltar</a>

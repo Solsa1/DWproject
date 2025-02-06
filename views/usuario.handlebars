@@ -1,0 +1,29 @@
+<!-- ESTE É O CADASTRO -->
+<h1>Cadastro de Usuario</h1>
+<form action="/adicionarUsuario" method="post">
+  <span>Nome: </span>
+    <input type="text" name="NomeUsuario">
+
+  <span>Email: </span>
+    <input type="email" name="EmailUsuario">
+
+  <span>Senha: </span>
+    <input type="password" name="SenhaUsuario">
+
+  <button type="submit">confirmar</button>
+</form>
+
+<br>
+
+<!-- Lista com todos os USUARIOS-->
+<ul name="lista_usuarios">
+  <p>TODOS OS USUARIOS CADASTRADOS</p>
+  {{#each usuarios}}
+    <li>Nome: {{this.nome}} <a href="/updateUsuario/{{this.id}}">Deseja mudar esse usuario?</a></li>
+    <li>Email: {{this.email}} <a href="/deleteUsuario/{{this.id}}" onclick="return confirm('Tem certeza?')">Deseja deletar esse usuario?</a></li>
+    <li>Senha: {{this.senha}}</li>
+    <br>
+  {{/each}}
+</ul>
+
+<a href="/">Voltar</a>
