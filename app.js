@@ -88,10 +88,9 @@ async function AutorDelete(id) {
 
 async function AutorFindPKbyname(name) {
     let dono = await autor.findOne({
-        where: {nome:name},
-        attributes:['id'] 
+        where: {nome:name}
     })
-    return dono;
+    return dono["id"];
 }
 
 // Todas as rotas
@@ -192,6 +191,22 @@ app.post('/album/:nome', async (req, res) => {
     id_autor:idAutor
    })
    res.redirect('/')
+})
+
+app.get('/albumAutor/:id',async (req, res)=>{
+    let album = await albuns.findAll({
+        where:{id_autor: req.params.id}
+    })
+    album = album.map((album => album.dataValues));
+    let autorr = await autor.findByPk(req.params.id)
+    console.log("autorr: " + autorr)
+    console.log(album)
+    let dados = {
+        autorNome: autorr.nome,
+        albuns: album.nome
+    };
+    console.log(dados)
+    res.render('/albumAutor', {dados})
 })
 
 // Iniciando o server
