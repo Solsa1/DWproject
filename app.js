@@ -199,14 +199,15 @@ app.get('/albumAutor/:id',async (req, res)=>{
     })
     album = album.map((album => album.dataValues));
     let autorr = await autor.findByPk(req.params.id)
+    autorr = autorr.dataValues;
     console.log("autorr: " + autorr)
     console.log(album)
     let dados = {
         autorNome: autorr.nome,
-        albuns: album.nome
+        albuns: album
     };
     console.log(dados)
-    res.render('/albumAutor', {dados})
+    res.render('albumAutor', {autorr, album})
 })
 
 // Iniciando o server

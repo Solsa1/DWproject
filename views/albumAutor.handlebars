@@ -1,8 +1,9 @@
 <ul name="lista_usuarios">
   <p>TODOS OS ALBUNS CADASTRADOS</p>
-  {{#each dados}}
-    <li>Nome: {{this.albuns}}</li>
-    <li>Nome Autor: {{this.autor}}</li>
+  <li>Nome Autor: {{autorr.nome}}</li>
+
+  {{#each album}}
+    <li>Nome: {{nome}}</li>
     <br>
   {{/each}}
 </ul>
