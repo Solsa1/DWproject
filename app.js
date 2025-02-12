@@ -200,14 +200,34 @@ app.get('/albumAutor/:id',async (req, res)=>{
     album = album.map((album => album.dataValues));
     let autorr = await autor.findByPk(req.params.id)
     autorr = autorr.dataValues;
-    console.log("autorr: " + autorr)
-    console.log(album)
     let dados = {
         autorNome: autorr.nome,
         albuns: album
     };
     console.log(dados)
     res.render('albumAutor', {autorr, album})
+})
+
+app.get('/updateAlbum/:id', async(req,res)=>{
+    let album = await albuns.findByPk(req.params.id);
+    album = album.dataValues;
+    res.render('updateAlbum', {album})
+})
+
+app.post('/updateAlbum/:id', async (req,res) => {
+    var nome = req.body.NovoNomeAlbum
+    var identify = req.params.id
+    let album = await albuns.update({
+        nome: nome,
+        }, {where:{
+            id:identify
+        }})
+    res.redirect('/')
+})
+
+app.get('/deleteAlbum/:id', async (req,res) => {
+    let dalbum = await albuns.destroy({where:{id:req.params.id}})
+    res.redirect('/')
 })
 
 // Iniciando o server

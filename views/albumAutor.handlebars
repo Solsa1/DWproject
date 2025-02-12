@@ -3,7 +3,8 @@
   <li>Nome Autor: {{autorr.nome}}</li>
 
   {{#each album}}
-    <li>Nome: {{nome}}</li>
+    <li>Nome: {{nome}} <a href="/deleteAlbum/{{id}}" onclick="return confirm('Tem certeza?')">Deseja excluir esse album?</a></li>
+    <li><a href="/updateAlbum/{{id}}">Deseja modificar esse album?</a></li>
     <br>
   {{/each}}
 </ul>
